@@ -1,0 +1,12 @@
+services:
+  app:
+    container_name: emergencia_node_cont
+    build: ./app/
+    ports:
+      - ${BACKEND_PORT}:3000
+    env_file:
+      - ./.env
+    volumes:
+      - ./app/:/app/
+
+
