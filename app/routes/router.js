@@ -6,7 +6,8 @@ const agentsRouter = express.Router();
 agentsRouter.use(express.json());
 
 
-agentsRouter.post("/extract", extractDataFromText);
+//                 /NomeDoAgente/AçãoDoAgente
+agentsRouter.post("/generico/extrairDados", extractDataFromText);
 
 
 export { agentsRouter };
