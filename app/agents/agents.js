@@ -23,7 +23,7 @@ const eyewitnesses = z.object({
     tel_contato:                z.nullable(z.string()).describe(`Telefone de contato da testemunha.`),
     relato:                     z.nullable(z.string()).describe(`Relato da testemunha sobre a ocorrência, se houver.`),
     vinculo_vitima:             z.nullable(z.string()).describe(`Vinculo que a testemunha possui com a vítima.`),
-    vinculo_envolvido:          z.array(z.nullable(z.string()).describe(`Vinculo que a testemunha possui com a vítima.`)),
+    vinculo_envolvidos:         z.array(z.nullable(z.string()).describe(`Vinculo que a testemunha possui com a vítima.`)),
 });
 
 const crimesCommited = z.nullable(z.string()).describe(`Tipo de crime efetuado na ocorrência`)
@@ -33,6 +33,7 @@ const genericDataSchema = z.object({
     dados_testemunhas:  z.nullable(z.array(eyewitnesses)),
     dados_envolvidos:   z.nullable(z.array(offenders)),
     tipos_crimes:       z.nullable(z.array(crimesCommited)),
+    dados_crimes:       z.null()
 });
 
 const genericDataExtractionAgent = chatGPTModel.withStructuredOutput(genericDataSchema);
