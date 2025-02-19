@@ -1,16 +1,37 @@
 import { genericDataExtractionAgent } from "../agents/agents.js";
 import { theftDataExtractionAgent } from "../agents/theftAgent.js";
 import { extractorAgentPromptTemplate, extractorTheftAgentPromptTemplate } from "../agents/promptTemplates.js";
+import { extractSpecializedData, getDateTime } from "./functions.js"
 
 
-const extractSpecializedData = (text, crimesArray) => {
+async function extractTheftData(text) {
+    try{
+        const prompt = await extractorTheftAgentPromptTemplate.invoke({
+            text: text
+        })
+
+        const theftJson = await theftDataExtractionAgent.invoke(prompt)
+
+        return theftJson;
+    } catch(error){
+        console.error(error);
+        res.status(500).send(error);
+    }
+}
+
+async function extractSpecializedData(text, crimesArray) {
     // Esse código é temporário e não é representativo
     // do que a função deve e vai fazer no futuro.
+    const crimesObj = {
+        "Roubo": extractTheftData
+    }
+
     let specializedJsonArr = []
 
-    for (let crime of crimesArray) {
-        // Fazendo coisas com o texto formalizado...
-        specializedJsonArr.push({ tipo_crime: crime });
+    let crimeType;
+    for (let i = 0; i < crimesArray.length; i++) {
+        crimeType = crimesArray[i];
+        specializedJsonArr.push(await crimesObj[crimeType](text));
     }
 
     return specializedJsonArr;
@@ -53,35 +74,19 @@ const extractGenericData = async (req, res, next) => {
 
 
 
-const callSpecializedAgents = (req, res) => {
+const callSpecializedAgents = async (req, res) => {
     try {
         let ocurranceJson = req.body.genericJson;
         const crimeTypes = ocurranceJson.tipos_crimes;
         const text = req.body.texto_formalizado;
 
-        ocurranceJson.dados_crimes = extractSpecializedData(text, crimeTypes);
+        ocurranceJson.dados_crimes = await extractSpecializedData(text, crimeTypes);
         const dateTime = getDateTime();
         ocurranceJson.dados_data_hora.data_registro_ocorrencia = dateTime.date;
         ocurranceJson.dados_data_hora.horario_registro_ocorrencia = dateTime.time;
 
         res.json(ocurranceJson);
     } catch (error) {
-        console.error(error);
-        res.status(500).send(error);
-    }
-}
-
-const extractTheftData = async (req, res, next) => {
-    try{
-        const prompt = await extractorTheftAgentPromptTemplate.invoke({
-            text:req.body.texto_formalizado
-        })
-
-        const theftJson = await theftDataExtractionAgent.invoke(prompt)
-
-        req.body.theftJson = theftJson;
-        next(); // esse next faz o que ?
-    } catch(error){
         console.error(error);
         res.status(500).send(error);
     }
