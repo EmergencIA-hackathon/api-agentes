@@ -1,41 +1,6 @@
 import { genericDataExtractionAgent } from "../agents/agents.js";
-import { theftDataExtractionAgent } from "../agents/theftAgent.js";
-import { extractorAgentPromptTemplate, extractorTheftAgentPromptTemplate } from "../agents/promptTemplates.js";
-import { extractSpecializedData, getDateTime } from "./functions.js"
-
-
-async function extractTheftData(text) {
-    try{
-        const prompt = await extractorTheftAgentPromptTemplate.invoke({
-            text: text
-        })
-
-        const theftJson = await theftDataExtractionAgent.invoke(prompt)
-
-        return theftJson;
-    } catch(error){
-        console.error(error);
-        res.status(500).send(error);
-    }
-}
-
-async function extractSpecializedData(text, crimesArray) {
-    // Esse código é temporário e não é representativo
-    // do que a função deve e vai fazer no futuro.
-    const crimesObj = {
-        "Roubo": extractTheftData
-    }
-
-    let specializedJsonArr = []
-
-    let crimeType;
-    for (let i = 0; i < crimesArray.length; i++) {
-        crimeType = crimesArray[i];
-        specializedJsonArr.push(await crimesObj[crimeType](text));
-    }
-
-    return specializedJsonArr;
-}
+import { extractorAgentPromptTemplate } from "../agents/promptTemplates.js";
+import { extractSpecializedData } from "./agentsFunctions.js";
 
 
 function getDateTime() {
