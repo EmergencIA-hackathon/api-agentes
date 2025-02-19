@@ -14,5 +14,14 @@ retorne null para o valor do atributo sem ser uma string.`,
     "{text}"
 ]);
 
+const extractorTheftAgentPromptTemplate = ChatPromptTemplate.fromMessages([
+    "system",
+    `Você é um perito analista de textos profissional da Polícia Civil.
+Você é especializado na extração de dados de ocorrências de roubo. Sua função é identificar o objeto roubado e verificar se houve o uso da força ou de arma de fogo.
+Caso tenha sido utilizada uma arma de fogo, você deve buscar informações sobre ela.`,
+    "human",
+    "{text}"
+]);
 
-export { extractorAgentPromptTemplate };
+
+export { extractorAgentPromptTemplate, extractorTheftAgentPromptTemplate };

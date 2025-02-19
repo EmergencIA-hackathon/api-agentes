@@ -1,5 +1,6 @@
 import { genericDataExtractionAgent } from "../agents/agents.js";
-import { extractorAgentPromptTemplate } from "../agents/promptTemplates.js";
+import { theftDataExtractionAgent } from "../agents/theftAgent.js";
+import { extractorAgentPromptTemplate, extractorTheftAgentPromptTemplate } from "../agents/promptTemplates.js";
 
 
 const extractSpecializedData = (text, crimesArray) => {
@@ -70,5 +71,20 @@ const callSpecializedAgents = (req, res) => {
     }
 }
 
+const extractTheftData = async (req, res, next) => {
+    try{
+        const prompt = await extractorTheftAgentPromptTemplate.invoke({
+            text:req.body.texto_formalizado
+        })
+
+        const theftJson = await theftDataExtractionAgent.invoke(prompt)
+
+        req.body.theftJson = theftJson;
+        next(); // esse next faz o que ?
+    } catch(error){
+        console.error(error);
+        res.status(500).send(error);
+    }
+}
 
 export { extractGenericData, callSpecializedAgents }
