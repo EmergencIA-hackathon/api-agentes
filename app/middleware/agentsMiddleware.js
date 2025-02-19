@@ -1,5 +1,23 @@
 import { genericDataExtractionAgent } from "../agents/agents.js";
-import { extractorAgentPromptTemplate } from "../agents/promptTemplates.js";
+import { extractorAgentPromptTemplate, scrivenerAgentPromptTemplate } from "../agents/promptTemplates.js";
+import { chatGPTModel } from "../agents/baseLLM.js";
+
+
+const callScrivener = async (req, res, next) => {
+    try {
+        const prompt = await scrivenerAgentPromptTemplate.invoke({
+            text: req.body.texto // Texto a ser corrigido
+        });
+
+        const formalizedResponse = await chatGPTModel.invoke(prompt);
+
+        req.body.texto_formalizado = formalizedResponse.choices[0].message.content;
+        next();
+    } catch (error) {
+        console.error("Erro ao formalizar o texto:", error);
+        res.status(500).send("Erro ao formalizar o texto.");
+    }
+};
 
 
 const extractSpecializedData = (text, crimesArray) => {
@@ -71,4 +89,4 @@ const callSpecializedAgents = (req, res) => {
 }
 
 
-export { extractGenericData, callSpecializedAgents }
+export { extractGenericData, callSpecializedAgents, callScrivener }
