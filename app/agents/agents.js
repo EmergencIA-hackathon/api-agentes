@@ -34,7 +34,7 @@ const eyewitnessData = z.object({
     vinculo_envolvidos:         z.array(z.nullable(z.string()).describe(`Vinculo que a testemunha possui com a vítima.`)),
 });
 
-const crimesCommited = z.nullable(z.string()).describe(`Tipo de crime efetuado na ocorrência`);
+const crimesCommited = z.nullable(z.string()).describe(`Tipo de crime efetuado na ocorrência seguindo o padrão: Roubo, Furto, Vias de fato`);
 
 const locationData = z.object({
     tipo_local:                 z.nullable(z.string()).describe(`Tipo de localização, se foi em via pública, rodovia estadual, etc.`),
