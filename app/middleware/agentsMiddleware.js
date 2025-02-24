@@ -1,22 +1,22 @@
 import { genericDataExtractionAgent } from "../agents/agents.js";
-import { extractorAgentPromptTemplate } from "../agents/promptTemplates.js";
+import { scrivenerAgent } from "../agents/scrivenerAgent.js";
+import { extractorAgentPromptTemplate, scrivenerAgentPromptTemplate } from "../agents/promptTemplates.js";
 import { extractSpecializedData } from "./agentsFunctions.js";
+import { getDateTime } from "./functions.js"
 
 
-function getDateTime() {
-    let dateObj = new Date();
+const transcribeText = async (req, res, next) => {
+    try {
+        const prompt = await scrivenerAgentPromptTemplate.invoke({
+            text: req.body.texto_informal
+        })
 
-    const time = dateObj.toTimeString().slice(0,5);
-    const day = dateObj.getDate() > 9 ? dateObj.getDate() : `0${dateObj.getDate()}`;
-    const month = dateObj.getMonth() + 1;
-    const year = dateObj.getFullYear();
-    
-    const dateTime = {
-        date: `${day}/${month}/${year}`,
-        time: time
-    };
-
-    return dateTime;
+        req.body.texto_formalizado = await scrivenerAgent.invoke(prompt);
+        next();
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error);
+    }
 }
 
 
@@ -37,8 +37,6 @@ const extractGenericData = async (req, res, next) => {
     }
 }
 
-
-
 const callSpecializedAgents = async (req, res) => {
     try {
         let ocurranceJson = req.body.genericJson;
@@ -57,4 +55,4 @@ const callSpecializedAgents = async (req, res) => {
     }
 }
 
-export { extractGenericData, callSpecializedAgents }
+export { transcribeText, extractGenericData, callSpecializedAgents }

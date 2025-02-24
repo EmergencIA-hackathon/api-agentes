@@ -1,15 +1,10 @@
-import dotenv from "dotenv";
 import express from "express";
 import { agentsRouter } from "./routes/router.js";
-import scrivenerRouter from "./agents/scrivenerAgent.js";
-
-dotenv.config();
 
 const app = express();
 
 app.use(express.json());
 app.use("/api/agentes", agentsRouter);
-app.use("/api/agentes", scrivenerRouter);
 
 app.get("", (req, res) => {
     console.log("OKAY");
