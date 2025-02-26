@@ -38,10 +38,18 @@ const fraudAgentPromptTemplate = ChatPromptTemplate.fromMessages([
     "{text}",
 ])
 
+const trafficAgentPromptTemplate = ChatPromptTemplate.fromMessages([
+    "system",
+    "Você é um perito analista de textos profissional da Polícia Civil. Você é especializado na extração de dados de ocorrências de trafico. Sua função é identificar o(s) tipo(s) de droga(s). Caso você não identifique uma das informações solicitadas, retorne null para o valor do atributo sem ser uma string. Nunca retorne uma string vazia",
+    "human",
+    "{text}",
+])
+
 export {
     extractorAgentPromptTemplate,
     theftAgentPromptTemplate,
     scrivenerAgentPromptTemplate,
     batteryAgentPromptTemplate,
-    fraudAgentPromptTemplate
+    fraudAgentPromptTemplate,
+    trafficAgentPromptTemplate
 };
