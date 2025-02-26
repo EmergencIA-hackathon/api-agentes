@@ -17,25 +17,25 @@ const celphoneData = z.object({
 });
 
 const documentData = z.object({
-    type: z
+    tipo: z
         .nullable(z.string())
         .describe(
             `Tipo do documento roubado, como por exemplo rg, cnh, passaporte ou outro.`
         ),
-    number: z.nullable(z.string()).describe(`Numero do documento roubado.`),
+    numero: z.nullable(z.string()).describe(`Numero do documento roubado.`),
 });
 
 const objectData = z.object({
-    name: z.nullable(z.string()).describe(`Nome do objeto roubado.`),
-    description: z
+    nome: z.nullable(z.string()).describe(`Nome do objeto roubado.`),
+    descricao: z
         .nullable(z.string())
         .describe(`Descricao do objeto roubado.`),
     marca: z.nullable(z.string()).describe(`Marca do objeto roubado.`),
 });
 
 const informationData = z.object({
-    armUse: z.nullable(z.boolean()).describe(`Houve uso de arma?`),
-    violenceUse: z.nullable(z.boolean()).describe(`Houve uso de violencia?`),
+    usoDeArma: z.nullable(z.boolean()).describe(`Houve uso de arma?`),
+    usoDeViolencia: z.nullable(z.boolean()).describe(`Houve uso de violencia?`),
 });
 
 const theftDataSchema = z.object({

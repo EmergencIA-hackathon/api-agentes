@@ -39,7 +39,7 @@ const offenderData = z.object({
         ),
     envolvimento: z
         .nullable(z.string())
-        .describe(`Envolvimento da pessoa na occorrência.`),
+        .describe(`Envolvimento da pessoa na occorrência. Acrescente sempre um "suposto(a)" antes do envolvimento. Pois de acordo com o codigo penal brasileiro ngm pode ser declarado culpado antes de sentenca transitada em julgado.`),
     condicao_envolvido: z
         .nullable(z.string())
         .describe(`Condição física do envolvido.`),
@@ -74,7 +74,7 @@ const eyewitnessData = z.object({
 const crimesCommited = z
     .nullable(z.string())
     .describe(
-        "Qual foi o tipo de crime efetuado na ocorrência? Retorne a resposta como estão dentro de cada um dos parenteses: A vítima foi roubada? (Roubo). A vítima sofreu algum tipo de lesão corporal? (Lesao Corporal). A vítima sofreu estelionato? (Estelionato)"
+        "Qual foi o tipo de crime efetuado na ocorrência? Retorne a resposta como estão dentro de cada um dos parenteses: A vítima foi roubada? (Roubo). A vítima sofreu algum tipo de lesão corporal? (Lesao Corporal). A vítima sofreu estelionato? (Estelionato). A denuncia é de tráfico de drogas? (Tráfico de Drogas) "
     );
 
 const locationData = z.object({

@@ -1,11 +1,29 @@
 import {
     batteryAgentPromptTemplate,
     theftAgentPromptTemplate,
-    fraudAgentPromptTemplate
+    fraudAgentPromptTemplate,
+    trafficAgentPromptTemplate
 } from "../agents/promptTemplates.js";
 import { batteryDataExtractionAgent } from "../agents/batteryAgent.js";
 import { theftDataExtractionAgent } from "../agents/theftAgent.js";
 import { fraudDataExtractionAgent } from "../agents/fraudAgent.js"
+import { trafficDataExtrationAgent } from "../agents/trafficAgent.js"
+
+async function extractTrafficData(text) {
+    try {
+        const prompt = await trafficAgentPromptTemplate.invoke({
+            text: text,
+        })
+        const trafficJson = await trafficDataExtrationAgent.invoke(prompt)
+
+        console.log("Done extracting traffic data.");
+        return trafficJson;
+    }catch(error){
+        console.error("Error while extracting trafic data:", error);
+        return null;
+    }
+    
+}
 
 async function extractFraudData(text) {
     try {
@@ -59,7 +77,8 @@ async function extractSpecializedData(text, crimesArray) {
     const crimesObj = {
         "Roubo": extractTheftData,
         "Lesao Corporal": extractBatteryData,
-        "Estelionato": extractFraudData
+        "Estelionato": extractFraudData,
+        "Tráfico de Drogas": extractTrafficData
     };
 
     let specializedJsonArr = [];
