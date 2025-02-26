@@ -5,7 +5,7 @@ const victimBankData = z.object({
     bankName: z.nullable(z.string()).describe(`Nome do banco da vitima.`),
     account: z.nullable(z.string()).describe(`Numero da conta da vitima.`),
     account: z.nullable(z.string()).describe(`Numero da agencia bancaria da vitima`),
-    fraudValue: z.nullable(z.float()).describe(`Valor subtraido da conta da vitima`)
+    fraudValue: z.nullable(z.string()).describe(`Valor subtraido da conta da vitima`)
 })
 
 const offenderBankData = z.object({
@@ -19,7 +19,7 @@ const victimCreditCard = z.object({
     creditCardBanner: z.nullable(z.string()).describe(`Bandeira do cartao de credito da vitima.`),
     creditCardNumber: z.nullable(z.string()).describe(`Numero do cartao de credito da vitima.`),
     creditCardValidity: z.nullable(z.string()).describe(`Validade do cartao de credito da vitima`),
-    creditCardSecurityCode: z.nullable(z.float()).describe(`Codigo de seguranca do cartao de credito da vitima`)
+    creditCardSecurityCode: z.nullable(z.string()).describe(`Codigo de seguranca do cartao de credito da vitima`)
 })
 
 const siteInfos = z.object({
@@ -69,4 +69,4 @@ const fraudDataSchema = z.object({
 })
 
 export const fraudDataExtractionAgent = 
-    chatGPTModel.whithStructuredOutput(fraudDataSchema)
+    chatGPTModel.withStructuredOutput(fraudDataSchema)
