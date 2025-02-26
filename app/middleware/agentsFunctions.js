@@ -77,7 +77,8 @@ async function extractSpecializedData(text, crimesArray) {
     const crimesObj = {
         "Roubo": extractTheftData,
         "Lesao Corporal": extractBatteryData,
-        "Estelionato": extractFraudData
+        "Estelionato": extractFraudData,
+        "Tráfico de Drogas": extractTrafficData
     };
 
     let specializedJsonArr = [];
