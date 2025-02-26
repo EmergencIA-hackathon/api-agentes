@@ -7,5 +7,5 @@
     "bracketSpacing": true,
     "objectWrap": "preserve",
     "arrowParens": "always",
-    "parser": "babel",
+    "parser": "babel"
 }

@@ -1,13 +1,31 @@
-import { theftDataExtractionAgent } from "../agents/theftAgent.js";
 import {
     batteryAgentPromptTemplate,
-    extractorTheftAgentPromptTemplate,
+    theftAgentPromptTemplate,
+    fraudAgentPromptTemplate
 } from "../agents/promptTemplates.js";
 import { batteryDataExtractionAgent } from "../agents/batteryAgent.js";
+import { theftDataExtractionAgent } from "../agents/theftAgent.js";
+import { fraudDataExtractionAgent } from "../agents/fraudAgent.js"
+
+async function extractFraudData(text) {
+    try {
+        const prompt = await fraudAgentPromptTemplate.invoke({
+            text: text,
+        })
+        const fraudJson = await fraudDataExtractionAgent.invoke(prompt)
+
+        console.log("Done extracting fraud data.");
+        return fraudJson;
+    }catch(error){
+        console.error("Error while extracting fraud data:", error);
+        return null;
+    }
+    
+}
 
 async function extractTheftData(text) {
     try {
-        const prompt = await extractorTheftAgentPromptTemplate.invoke({
+        const prompt = await theftAgentPromptTemplate.invoke({
             text: text,
         });
 

@@ -1,8 +1,6 @@
 import z from "zod";
 import { chatGPTModel } from "./baseLLM.js";
 
-// Agente de extracao de dados de roubo
-
 const vehicleData = z.object({
     marca: z.nullable(z.string()).describe(`Marca do veiculo roubado.`),
     modelo: z.nullable(z.string()).describe(`Modelo do veiculo roubado`),
@@ -48,9 +46,6 @@ const theftDataSchema = z.object({
     dados_complementares: z.nullable(informationData),
 });
 
-// qual a diferenca entre essa linha abaixo e a o export do objeto entre chaves?
-// export const theftDataExtractionAgent = chatGPTModel.withStructuredOutput(theftDataSchema)
-
-const theftDataExtractionAgent =
+export const theftDataExtractionAgent =
     chatGPTModel.withStructuredOutput(theftDataSchema);
-export { theftDataExtractionAgent };
+

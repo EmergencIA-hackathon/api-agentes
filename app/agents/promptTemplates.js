@@ -10,7 +10,7 @@ const extractorAgentPromptTemplate = ChatPromptTemplate.fromMessages([
     "{text}",
 ]);
 
-const extractorTheftAgentPromptTemplate = ChatPromptTemplate.fromMessages([
+const theftAgentPromptTemplate = ChatPromptTemplate.fromMessages([
     "system",
     "Você é um perito analista de textos profissional da Polícia Civil. Você é especializado na extração de dados de ocorrências de roubo. Sua função é identificar o objeto roubado e verificar se houve o uso da força ou de arma de fogo. Caso tenha sido utilizada uma arma de fogo, você deve buscar informações sobre ela. Caso você não identifique uma das informações solicitadas, retorne null para o valor do atributo sem ser uma string. Nunca retorne uma string vazia",
     "human",
@@ -31,9 +31,17 @@ const batteryAgentPromptTemplate = ChatPromptTemplate.fromMessages([
     "{text}",
 ]);
 
+const fraudAgentPromptTemplate = ChatPromptTemplate.fromMessages([
+    "system",
+    "Você é um perito analista de textos profissional da Polícia Civil. Você é especializado na extração de dados de ocorrências de estelionato. Sua função é identificar o tipo de golpe sofrido, se a vitima informou dados bancarios dela ou dos estelionatarios, se informou sobre sites ou contas que foram usados no golpe. Caso você não identifique uma das informações solicitadas, retorne null para o valor do atributo sem ser uma string. Nunca retorne uma string vazia",
+    "human",
+    "{text}",
+])
+
 export {
     extractorAgentPromptTemplate,
-    extractorTheftAgentPromptTemplate,
+    theftAgentPromptTemplate,
     scrivenerAgentPromptTemplate,
     batteryAgentPromptTemplate,
+    fraudAgentPromptTemplate
 };
