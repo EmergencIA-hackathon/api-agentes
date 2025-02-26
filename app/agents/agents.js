@@ -39,7 +39,7 @@ const offenderData = z.object({
         ),
     envolvimento: z
         .nullable(z.string())
-        .describe(`Envolvimento da pessoa na occorrência.`),
+        .describe(`Envolvimento da pessoa na occorrência. Acrescente sempre um "suposto(a)" antes do envolvimento. Pois de acordo com o codigo penal brasileiro ngm pode ser declarado culpado antes de sentenca transitada em julgado.`),
     condicao_envolvido: z
         .nullable(z.string())
         .describe(`Condição física do envolvido.`),
