@@ -12,7 +12,7 @@ const drugsData = z.object({
 });
 
 const trafficDataSchema = z.object({
-    dados_substancia: z.nullable(z.arry(drugsData))
+    dados_substancia: z.nullable(z.array(drugsData))
 })
 
-export const trafficDataExtrationAgent = chatGPTModel.whitStructuredOutput(trafficDataSchema)
+export const trafficDataExtrationAgent = chatGPTModel.withStructuredOutput(trafficDataSchema)
