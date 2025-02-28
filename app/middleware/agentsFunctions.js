@@ -1,18 +1,75 @@
+import {
+    batteryAgentPromptTemplate,
+    theftAgentPromptTemplate,
+    fraudAgentPromptTemplate,
+    trafficAgentPromptTemplate,
+    extractorViolenceAgentPromptTemplate,
+} from "../agents/promptTemplates.js";
+
+import { batteryDataExtractionAgent } from "../agents/batteryAgent.js";
 import { theftDataExtractionAgent } from "../agents/theftAgent.js";
-import { violenceDataExtractionAgent } from "../agents/violenceAgainstWomenAgent.js"
-import { extractorTheftAgentPromptTemplate, extractorViolenceAgentPromptTemplate } from "../agents/promptTemplates.js";
+import { violenceDataExtractionAgent } from "../agents/violenceAgainstWomenAgent.js";
+import { fraudDataExtractionAgent } from "../agents/fraudAgent.js";
+import { trafficDataExtrationAgent } from "../agents/trafficAgent.js";
+
+async function extractTrafficData(text) {
+    try {
+        const prompt = await trafficAgentPromptTemplate.invoke({
+            text: text,
+        });
+        const trafficJson = await trafficDataExtrationAgent.invoke(prompt);
+
+        console.log("Done extracting traffic data.");
+        return trafficJson;
+    } catch (error) {
+        console.error("Error while extracting trafic data:", error);
+        return null;
+    }
+}
+
+async function extractFraudData(text) {
+    try {
+        const prompt = await fraudAgentPromptTemplate.invoke({
+            text: text,
+        });
+        const fraudJson = await fraudDataExtractionAgent.invoke(prompt);
+
+        console.log("Done extracting fraud data.");
+        return fraudJson;
+    } catch (error) {
+        console.error("Error while extracting fraud data:", error);
+        return null;
+    }
+}
 
 async function extractTheftData(text) {
-    try{
-        const prompt = await extractorTheftAgentPromptTemplate.invoke({
-            text: text
-        })
+    try {
+        const prompt = await theftAgentPromptTemplate.invoke({
+            text: text,
+        });
 
-        const theftJson = await theftDataExtractionAgent.invoke(prompt)
+        const theftJson = await theftDataExtractionAgent.invoke(prompt);
 
+        console.log("Done extracting theft data.");
         return theftJson;
-    } catch(error){
-        console.error(error);
+    } catch (error) {
+        console.error("Error while extracting theft data:", error);
+        return null;
+    }
+}
+
+async function extractBatteryData(text) {
+    try {
+        const prompt = await batteryAgentPromptTemplate.invoke({
+            text: text,
+        });
+
+        const batteryJson = await batteryDataExtractionAgent.invoke(prompt);
+
+        console.log("Done extracting battery data.");
+        return batteryJson;
+    } catch (error) {
+        console.error("Error while extracting battery data:", error);
         return null;
     }
 }
@@ -20,7 +77,9 @@ async function extractTheftData(text) {
 async function extractViolenceData(text) {
     try {
         // Gera o prompt e faz a extração dos dados
-        const prompt = await extractorViolenceAgentPromptTemplate.invoke({ text });
+        const prompt = await extractorViolenceAgentPromptTemplate.invoke({
+            text,
+        });
         const violenceJson = await violenceDataExtractionAgent.invoke(prompt);
 
         // Garantindo que violenceJson seja um objeto válido
@@ -32,8 +91,8 @@ async function extractViolenceData(text) {
             for (const [violenceType, data] of Object.entries(violenceJson)) {
                 if (Array.isArray(data)) {
                     // Filtra apenas os objetos onde pelo menos um campo seja `true`
-                    const filteredArray = data.filter(obj =>
-                        Object.values(obj).some(value => value === true)
+                    const filteredArray = data.filter((obj) =>
+                        Object.values(obj).some((value) => value === true)
                     );
 
                     if (filteredArray.length > 0) {
@@ -42,7 +101,9 @@ async function extractViolenceData(text) {
                 } else if (typeof data === "object" && data !== null) {
                     // Trata o caso específico do feminicídio, que é um único objeto e não um array
                     const filteredData = Object.fromEntries(
-                        Object.entries(data).filter(([_, value]) => value === true)
+                        Object.entries(data).filter(
+                            ([_, value]) => value === true
+                        )
                     );
 
                     if (Object.keys(filteredData).length > 0) {
@@ -59,21 +120,22 @@ async function extractViolenceData(text) {
 
         // Se não houver dados extraídos, retorna um objeto vazio
         return { "Violência contra a mulher": {} };
-
     } catch (error) {
         console.error("Erro ao extrair dados de violência:", error);
         return { "Violência contra a mulher": {} }; // Retorna um objeto vazio em caso de erro
     }
 }
 
-
 async function extractSpecializedData(text, crimesArray) {
     const crimesObj = {
         "Roubo": extractTheftData,
-        "Violência contra a mulher": extractViolenceData
-    }
+        "Violência contra a mulher": extractViolenceData,
+        "Lesao Corporal": extractBatteryData,
+        "Estelionato": extractFraudData,
+        "Tráfico de Drogas": extractTrafficData,
+    };
 
-    let specializedJsonArr = []
+    let specializedJsonArr = [];
 
     let crimeType;
     for (let i = 0; i < crimesArray.length; i++) {
@@ -83,6 +145,5 @@ async function extractSpecializedData(text, crimesArray) {
 
     return specializedJsonArr;
 }
-
 
 export { extractSpecializedData };
