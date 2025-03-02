@@ -113,8 +113,8 @@ const locationData = z.object({
     texto_trecho: z
         .nullable(z.string())
         .describe(`Trecho em que aconteceu a ocorrência.`), // ??? Mudar isso o quanto antes.
-    longitude: z.null(), // Recebe do bot
-    latitude: z.null(), // Recebe do bot
+    longitude: z.nullable(z.string()).describe("longitude de onde aconteceu a ocorrência"), // Recebe do bot
+    latitude: z.nullable(z.string()).describe("latitude de onde aconteceu a ocorrência"), // Recebe do bot
 });
 
 const dateTimeData = z.object({
@@ -134,7 +134,7 @@ const dateTimeData = z.object({
 
 const genericDataSchema = z.object({
     dados_localizacao: z.nullable(locationData),
-    dados_data_hora: z.nullable(dateTimeData),
+    dados_data_hora: dateTimeData,
     dados_vitima: z.nullable(victimData),
     dados_testemunhas: z.nullable(z.array(eyewitnessData)),
     dados_envolvidos: z.nullable(z.array(offenderData)),

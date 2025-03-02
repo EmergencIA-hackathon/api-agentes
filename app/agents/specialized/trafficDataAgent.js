@@ -1,5 +1,5 @@
 import z from "zod";
-import { chatGPTModel } from "./baseLLM.js";
+import { chatGPTModel } from "../baseLLM.js";
 
 const drugsData = z.object({
     nome: z.nullable(z.string()).describe(`Nome da substancia(droga) que esta sendo vendida ou ofertada. Guarde nessa variavel com analogo a, por exemplo se no texto voce encontrar maconha, guaarde, substancia analoga a maconha, se encontrar no texto cocaina guarde substancia analoga a cocaina e assim com as demais possiveis drogas`),

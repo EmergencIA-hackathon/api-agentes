@@ -1,4 +1,4 @@
-import { genericDataExtractionAgent } from "../agents/agents.js";
+import { genericDataExtractionAgent } from "../agents/genericDataAgent.js";
 import { scrivenerAgent } from "../agents/scrivenerAgent.js";
 import {
     extractorAgentPromptTemplate,

@@ -1,5 +1,5 @@
 import z from "zod";
-import { chatGPTModel } from "./baseLLM.js";
+import { chatGPTModel } from "../baseLLM.js";
 
 const mildBodilyInjuryData = z.object({
     tipo: z.literal("leve"),

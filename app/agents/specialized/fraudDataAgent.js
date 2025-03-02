@@ -1,5 +1,5 @@
 import z from "zod";
-import { chatGPTModel } from "./baseLLM.js";
+import { chatGPTModel } from "../baseLLM.js";
 
 const victimBankData = z.object({
     nomeBanco: z.nullable(z.string()).describe(`Nome do banco da vitima.`),

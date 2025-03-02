@@ -4,10 +4,10 @@ import {
     fraudAgentPromptTemplate,
     trafficAgentPromptTemplate
 } from "../agents/promptTemplates.js";
-import { batteryDataExtractionAgent } from "../agents/batteryAgent.js";
-import { theftDataExtractionAgent } from "../agents/theftAgent.js";
-import { fraudDataExtractionAgent } from "../agents/fraudAgent.js"
-import { trafficDataExtrationAgent } from "../agents/trafficAgent.js"
+import { batteryDataExtractionAgent } from "../agents/specialized/batteryDataAgent.js";
+import { theftDataExtractionAgent } from "../agents/specialized/theftDataAgent.js";
+import { fraudDataExtractionAgent } from "../agents/specialized/fraudDataAgent.js"
+import { trafficDataExtrationAgent } from "../agents/specialized/trafficDataAgent.js"
 
 async function extractTrafficData(text) {
     try {
