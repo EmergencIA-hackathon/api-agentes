@@ -1,5 +1,5 @@
 import z from "zod";
-import { chatGPTModel } from "./baseLLM.js";
+import { chatGPTModel } from "../baseLLM.js";
 
 // Agente de extração de dados de violência contra a mulher
 
@@ -114,7 +114,6 @@ const violenceDataSchema = z.object({
     feminicidio: z.nullable(feminicidioData),
 });
 
-const violenceDataExtractionAgent =
+export const violenceDataExtractionAgent =
     chatGPTModel.withStructuredOutput(violenceDataSchema);
 
-export { violenceDataExtractionAgent };

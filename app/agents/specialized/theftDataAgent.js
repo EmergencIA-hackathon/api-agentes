@@ -1,5 +1,5 @@
 import z from "zod";
-import { chatGPTModel } from "./baseLLM.js";
+import { chatGPTModel } from "../baseLLM.js";
 
 const vehicleData = z.object({
     marca: z.nullable(z.string()).describe(`Marca do veiculo roubado.`),

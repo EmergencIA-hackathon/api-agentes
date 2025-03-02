@@ -1,5 +1,5 @@
 import z from "zod";
-import { chatGPTModel } from "./baseLLM.js";
+import { chatGPTModel } from "../baseLLM.js";
 
 const mildBodilyInjuryData = z.object({
     tipo: z.literal("leve"),
@@ -115,7 +115,5 @@ const batteryDataSchema = z.object({
     dados_violencia_domestica: z.nullable(domesticViolenceData),
 });
 
-const batteryDataExtractionAgent =
+export const batteryDataExtractionAgent =
     chatGPTModel.withStructuredOutput(batteryDataSchema);
-
-export { batteryDataExtractionAgent };
