@@ -45,7 +45,7 @@ export const trafficAgentPromptTemplate = ChatPromptTemplate.fromMessages([
     "{text}",
 ]);
 
-const extractorViolenceAgentPromptTemplate = ChatPromptTemplate.fromMessages([
+export const extractorViolenceAgentPromptTemplate = ChatPromptTemplate.fromMessages([
     "system",
     "Você é um perito analista de textos profissional da Polícia Civil. Você é especializado na extração de dados de ocorrências de violência contra a mulher. Sua função é identificar quais os tipos de violência contra a mulher relatados e verificar se houve ou não um feminicídio. Você deve relatar os tipos de violência ocorridos e caso não haja dados referentes a algum deles, retorne null.",
     "human",

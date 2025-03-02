@@ -3,6 +3,7 @@ import {
     theftAgentPromptTemplate,
     fraudAgentPromptTemplate,
     trafficAgentPromptTemplate,
+    extractorViolenceAgentPromptTemplate,
 } from "../agents/promptTemplates.js";
 
 import { batteryDataExtractionAgent } from "../agents/specialized/batteryDataAgent.js";
@@ -128,17 +129,18 @@ async function extractViolenceData(text) {
 export async function extractSpecializedData(text, crimesArray) {
     const crimesMap = new Map();
     crimesMap.set("Roubo", extractTheftData);
-    crimesMap.set("Lesao Corporal", extractBatteryData);
+    crimesMap.set("Lesão Corporal", extractBatteryData);
     crimesMap.set("Estelionato", extractFraudData);
     crimesMap.set("Tráfico de Drogas", extractTrafficData);
+    crimesMap.set("Violência Contra Mulher", extractViolenceData);
 
-    let specializedJsonArr = [];
+    let specializedJsonArr = crimesArray.map(async (crimeType) => {
+        if (crimesMap.has(crimeType)) {
+            return await crimesMap.get(crimeType)(text);
+        }
+    })
 
-    let crimeType;
-    for (let i = 0; i < crimesArray.length; i++) {
-        crimeType = crimesArray[i];
-        specializedJsonArr.push(await crimesObj[crimeType](text));
-    }
+    specializedJsonArr = Promise.all(specializedJsonArr)
 
     return specializedJsonArr;
 }
