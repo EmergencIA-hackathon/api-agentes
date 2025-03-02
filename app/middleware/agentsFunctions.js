@@ -7,7 +7,7 @@ import {
 
 import { batteryDataExtractionAgent } from "../agents/specialized/batteryDataAgent.js";
 import { theftDataExtractionAgent } from "../agents/specialized/theftDataAgent.js";
-import { violenceDataExtractionAgent } from "../agents/violenceAgainstWomenAgent.js";
+import { violenceDataExtractionAgent } from "../agents/specialized/violenceAgainstWomenAgent.js";
 import { fraudDataExtractionAgent } from "../agents/specialized/fraudDataAgent.js";;
 import { trafficDataExtrationAgent } from "../agents/specialized/trafficDataAgent.js";;
 
