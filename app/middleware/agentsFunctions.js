@@ -22,7 +22,7 @@ async function extractTrafficData(text) {
         console.error("Error while extracting trafic data:", error);
         return null;
     }
-    
+
 }
 
 async function extractFraudData(text) {
@@ -38,7 +38,7 @@ async function extractFraudData(text) {
         console.error("Error while extracting fraud data:", error);
         return null;
     }
-    
+
 }
 
 async function extractTheftData(text) {
@@ -73,22 +73,25 @@ async function extractBatteryData(text) {
     }
 }
 
-async function extractSpecializedData(text, crimesArray) {
-    const crimesObj = {
-        "Roubo": extractTheftData,
-        "Lesao Corporal": extractBatteryData,
-        "Estelionato": extractFraudData,
-        "Tráfico de Drogas": extractTrafficData
-    };
 export async function extractSpecializedData(text, crimesArray) {
 
-    let specializedJsonArr = [];
+    const crimesMap = new Map();
+    crimesMap.set("Roubo", extractTheftData)
+    crimesMap.set("Lesao Corporal", extractBatteryData)
+    crimesMap.set("Estelionato", extractFraudData)
+    crimesMap.set("Tráfico de Drogas", extractTrafficData)
 
-    let crimeType;
-    for (let i = 0; i < crimesArray.length; i++) {
-        crimeType = crimesArray[i];
-        specializedJsonArr.push(await crimesObj[crimeType](text));
+
+    if (crimesArray === null) {
+        return null
     }
+
+    const specializedJsonArr = crimesArray.map((crimeType) => {
+        if (crimesMap.has(crimeType)) {
+            return crimesMap.get(crimeType)(text)
+        }
+        return
+    })
 
     return specializedJsonArr;
 }
