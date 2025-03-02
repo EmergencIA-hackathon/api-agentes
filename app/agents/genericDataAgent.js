@@ -39,7 +39,9 @@ const offenderData = z.object({
         ),
     envolvimento: z
         .nullable(z.string())
-        .describe(`Envolvimento da pessoa na occorrência. Acrescente sempre um "suposto(a)" antes do envolvimento. Pois de acordo com o codigo penal brasileiro ngm pode ser declarado culpado antes de sentenca transitada em julgado.`),
+        .describe(
+            `Envolvimento da pessoa na occorrência. Acrescente sempre um "suposto(a)" antes do envolvimento. Pois de acordo com o codigo penal brasileiro ngm pode ser declarado culpado antes de sentenca transitada em julgado.`
+        ),
     condicao_envolvido: z
         .nullable(z.string())
         .describe(`Condição física do envolvido.`),
@@ -113,8 +115,12 @@ const locationData = z.object({
     texto_trecho: z
         .nullable(z.string())
         .describe(`Trecho em que aconteceu a ocorrência.`), // ??? Mudar isso o quanto antes.
-    longitude: z.nullable(z.string()).describe("longitude de onde aconteceu a ocorrência"), // Recebe do bot
-    latitude: z.nullable(z.string()).describe("latitude de onde aconteceu a ocorrência"), // Recebe do bot
+    longitude: z
+        .nullable(z.string())
+        .describe("longitude de onde aconteceu a ocorrência"), // Recebe do bot
+    latitude: z
+        .nullable(z.string())
+        .describe("latitude de onde aconteceu a ocorrência"), // Recebe do bot
 });
 
 const dateTimeData = z.object({
@@ -146,4 +152,3 @@ const genericDataSchema = z.object({
 
 export const genericDataExtractionAgent =
     chatGPTModel.withStructuredOutput(genericDataSchema);
-

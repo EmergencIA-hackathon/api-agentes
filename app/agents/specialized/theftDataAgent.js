@@ -27,9 +27,7 @@ const documentData = z.object({
 
 const objectData = z.object({
     nome: z.nullable(z.string()).describe(`Nome do objeto roubado.`),
-    descricao: z
-        .nullable(z.string())
-        .describe(`Descricao do objeto roubado.`),
+    descricao: z.nullable(z.string()).describe(`Descricao do objeto roubado.`),
     marca: z.nullable(z.string()).describe(`Marca do objeto roubado.`),
 });
 
@@ -48,4 +46,3 @@ const theftDataSchema = z.object({
 
 export const theftDataExtractionAgent =
     chatGPTModel.withStructuredOutput(theftDataSchema);
-

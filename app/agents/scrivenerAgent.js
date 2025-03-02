@@ -10,4 +10,3 @@ const formalizedText = z.object({
 });
 
 export const scrivenerAgent = chatGPTModel.withStructuredOutput(formalizedText);
-

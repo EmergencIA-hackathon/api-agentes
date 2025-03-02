@@ -117,4 +117,3 @@ const batteryDataSchema = z.object({
 
 export const batteryDataExtractionAgent =
     chatGPTModel.withStructuredOutput(batteryDataSchema);
-

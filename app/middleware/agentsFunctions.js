@@ -2,43 +2,41 @@ import {
     batteryAgentPromptTemplate,
     theftAgentPromptTemplate,
     fraudAgentPromptTemplate,
-    trafficAgentPromptTemplate
+    trafficAgentPromptTemplate,
 } from "../agents/promptTemplates.js";
 import { batteryDataExtractionAgent } from "../agents/specialized/batteryDataAgent.js";
 import { theftDataExtractionAgent } from "../agents/specialized/theftDataAgent.js";
-import { fraudDataExtractionAgent } from "../agents/specialized/fraudDataAgent.js"
-import { trafficDataExtrationAgent } from "../agents/specialized/trafficDataAgent.js"
+import { fraudDataExtractionAgent } from "../agents/specialized/fraudDataAgent.js";
+import { trafficDataExtrationAgent } from "../agents/specialized/trafficDataAgent.js";
 
 async function extractTrafficData(text) {
     try {
         const prompt = await trafficAgentPromptTemplate.invoke({
             text: text,
-        })
-        const trafficJson = await trafficDataExtrationAgent.invoke(prompt)
+        });
+        const trafficJson = await trafficDataExtrationAgent.invoke(prompt);
 
         console.log("Done extracting traffic data.");
         return trafficJson;
-    }catch(error){
+    } catch (error) {
         console.error("Error while extracting trafic data:", error);
         return null;
     }
-
 }
 
 async function extractFraudData(text) {
     try {
         const prompt = await fraudAgentPromptTemplate.invoke({
             text: text,
-        })
-        const fraudJson = await fraudDataExtractionAgent.invoke(prompt)
+        });
+        const fraudJson = await fraudDataExtractionAgent.invoke(prompt);
 
         console.log("Done extracting fraud data.");
         return fraudJson;
-    }catch(error){
+    } catch (error) {
         console.error("Error while extracting fraud data:", error);
         return null;
     }
-
 }
 
 async function extractTheftData(text) {
@@ -74,25 +72,22 @@ async function extractBatteryData(text) {
 }
 
 export async function extractSpecializedData(text, crimesArray) {
-
     const crimesMap = new Map();
-    crimesMap.set("Roubo", extractTheftData)
-    crimesMap.set("Lesao Corporal", extractBatteryData)
-    crimesMap.set("Estelionato", extractFraudData)
-    crimesMap.set("Tráfico de Drogas", extractTrafficData)
-
+    crimesMap.set("Roubo", extractTheftData);
+    crimesMap.set("Lesao Corporal", extractBatteryData);
+    crimesMap.set("Estelionato", extractFraudData);
+    crimesMap.set("Tráfico de Drogas", extractTrafficData);
 
     if (crimesArray === null) {
-        return null
+        return null;
     }
 
     const specializedJsonArr = crimesArray.map((crimeType) => {
         if (crimesMap.has(crimeType)) {
-            return crimesMap.get(crimeType)(text)
+            return crimesMap.get(crimeType)(text);
         }
-        return
-    })
+        return;
+    });
 
     return specializedJsonArr;
 }
-

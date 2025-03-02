@@ -36,12 +36,11 @@ export const fraudAgentPromptTemplate = ChatPromptTemplate.fromMessages([
     "Você é um perito analista de textos profissional da Polícia Civil. Você é especializado na extração de dados de ocorrências de estelionato. Sua função é identificar o tipo de golpe sofrido, se a vitima informou dados bancarios dela ou dos estelionatarios, se informou sobre sites ou contas que foram usados no golpe. Caso você não identifique uma das informações solicitadas, retorne null para o valor do atributo sem ser uma string. Nunca retorne uma string vazia",
     "human",
     "{text}",
-])
+]);
 
 export const trafficAgentPromptTemplate = ChatPromptTemplate.fromMessages([
     "system",
     "Você é um perito analista de textos profissional da Polícia Civil. Você é especializado na extração de dados de ocorrências de trafico. Entenda que caracteriza trafico os atos de importar, exportar, remeter, preparar, produzir, fabricar, adquirir, vender, expor à venda, oferecer, ter em depósito, transportar, trazer consigo, guardar, prescrever, ministrar, entregar a consumo ou fornecer drogas, ainda que gratuitamente. Sua função é identificar o(s) tipo(s) de droga(s). Caso você não identifique uma das informações solicitadas, retorne null para o valor do atributo sem ser uma string. Nunca retorne uma string vazia",
     "human",
     "{text}",
-])
-
+]);

@@ -5,7 +5,7 @@ import cors from "cors";
 const app = express();
 
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 app.use("/api/agentes", agentsRouter);
 
 app.get("", (req, res) => {

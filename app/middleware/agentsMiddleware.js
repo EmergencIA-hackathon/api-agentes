@@ -56,7 +56,7 @@ export const callSpecializedAgents = async (req, res) => {
         ocurranceJson.dados_data_hora.data_registro_ocorrencia = dateTime.date;
         ocurranceJson.dados_data_hora.horario_registro_ocorrencia =
             dateTime.time;
-        ocurranceJson.texto_narrativa = text
+        ocurranceJson.texto_narrativa = text;
 
         console.log("Done extracting specialized data.");
         res.status(200).json(ocurranceJson);
@@ -65,4 +65,3 @@ export const callSpecializedAgents = async (req, res) => {
         res.status(500).send(error);
     }
 };
-

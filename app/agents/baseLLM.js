@@ -5,4 +5,3 @@ export const chatGPTModel = new ChatOpenAI({
     apiKey: process.env.OPENAI_API_KEY,
     temperature: 0,
 });
-
