@@ -134,10 +134,15 @@ export async function extractSpecializedData(text, crimesArray) {
     crimesMap.set("Tráfico de Drogas", extractTrafficData);
     crimesMap.set("Violência Contra Mulher", extractViolenceData);
 
+    if (crimesArray === null) {
+        return null
+    }
+
     let specializedJsonArr = crimesArray.map(async (crimeType) => {
         if (crimesMap.has(crimeType)) {
             return await crimesMap.get(crimeType)(text);
         }
+        return null
     })
 
     specializedJsonArr = Promise.all(specializedJsonArr)
