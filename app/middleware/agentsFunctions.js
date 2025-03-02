@@ -80,6 +80,7 @@ async function extractSpecializedData(text, crimesArray) {
         "Estelionato": extractFraudData,
         "Tráfico de Drogas": extractTrafficData
     };
+export async function extractSpecializedData(text, crimesArray) {
 
     let specializedJsonArr = [];
 
@@ -92,4 +93,3 @@ async function extractSpecializedData(text, crimesArray) {
     return specializedJsonArr;
 }
 
-export { extractSpecializedData };

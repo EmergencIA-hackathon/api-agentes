@@ -144,7 +144,6 @@ const genericDataSchema = z.object({
     observacao: z.null(), // De onde isso vem?
 });
 
-const genericDataExtractionAgent =
+export const genericDataExtractionAgent =
     chatGPTModel.withStructuredOutput(genericDataSchema);
 
-export { genericDataExtractionAgent };

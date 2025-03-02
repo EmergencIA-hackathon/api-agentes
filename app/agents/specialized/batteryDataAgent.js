@@ -115,7 +115,6 @@ const batteryDataSchema = z.object({
     dados_violencia_domestica: z.nullable(domesticViolenceData),
 });
 
-const batteryDataExtractionAgent =
+export const batteryDataExtractionAgent =
     chatGPTModel.withStructuredOutput(batteryDataSchema);
 
-export { batteryDataExtractionAgent };
